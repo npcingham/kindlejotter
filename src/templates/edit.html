@@ -1,0 +1,38 @@
+<html>
+
+ <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" >
+  </head>
+
+  <body>
+
+               <h1>Kindle Jotter - Edit</h1>
+              {% for note in results %}
+              <form  method="post">
+           		<div id= "entry"><textarea name="subject" rows="1" cols="40">{{note.subject}}</textarea></div>
+                <div id= "entry"><textarea name="content" rows="3" cols="60">{{note.content}}</textarea></div>
+                <div id= "entry"><textarea name="content" rows="3" cols="60">{{note.key}}</textarea></div>
+                <div><input type="submit" value="Save"></div>
+                
+                
+              </form>
+         	 	
+                <FORM>
+		<INPUT TYPE="BUTTON" VALUE="View Notes" ONCLICK="window.location.href='/getnote'"> 
+	   </FORM>
+	 		  {% endfor %}
+	   
+	   {% if error %}
+	   
+	   <div id= "error">
+	   {{error}}
+	   </div>
+	   
+	   {% endif %}
+	    
+         
+		
+         
+
+  </body>
+</html>

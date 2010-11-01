@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+
+body {
+  font-family: Verdana, Helvetica, sans-serif;
+  background-color: white;
+}
+
+
+
+#error {
+	font-family: Helvetica;
+	size: 8;
+	color: red;
+}
+
+#entry {
+	font-family: Helvetica;
+	size: 50;
+	color: red;
+}
+
+table {
+	border-collapse:collapse;
+	border: 1px solid black;
+	
+}
+
+th {
+	text-align: left;
+	border: 1px solid black;
+	background: gray;
+	color:white;
+	paddings: 0.2em;
+}
+
+td
+		{
+	border: 1px solid black;
+	padding: 0.2em;
+}
