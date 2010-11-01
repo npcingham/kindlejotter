@@ -1,0 +1,37 @@
+<html>
+
+ <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+
+  <body>
+               <h1>Kindle Jotter</h1>
+             <p>
+             
+             <INPUT TYPE="BUTTON" VALUE="New Note" ONCLICK="window.location.href='/'">
+           		<INPUT TYPE="BUTTON" VALUE="Oldest Five Notes" ONCLICK="window.location.href='/filter'"> 
+	   		</p>
+             <table>
+             	<tr>
+             		<th> Date </th>
+             		<th> Subject </th>
+             		<th> View </th>
+             		<th> Edit </th>
+             		
+             	</tr>
+             	
+             {% for note in notelist %}
+             <tr>
+             	<td>{{note.date|date:"D d M Y"}}</td>
+             	<td>{{note.subject}}</td>
+             	<td>	<INPUT TYPE="BUTTON" VALUE="View" ONCLICK="window.location.href='/show?{{note.key}}'">
+             	</td>
+             	
+       		{% endfor %}
+           	</table>
+           		
+           		
+         
+
+  </body>
+</html>

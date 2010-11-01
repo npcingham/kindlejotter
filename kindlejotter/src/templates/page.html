@@ -1,0 +1,41 @@
+<html>
+
+ <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" >
+      </head>
+
+  <body>
+
+               <h1>Kindle Jotter - New</h1>
+              
+              <form name= "entrybox" action="/" method="post">
+           		<div id= "entry">
+           		<textarea name="subject" rows="1" cols="40"
+           		onfocus="document.entrybox.subject.value='';">
+Subject	</textarea></div>
+
+                <div id= "entry"><textarea name="content" rows="10" cols="60" 
+                onfocus="document.entrybox.content.value='';">
+Your Note...</textarea></div>
+                <div><input type="submit" value="Save"></div>
+              </form>
+         	  	
+                <FORM>
+		<INPUT TYPE="BUTTON" VALUE="View Notes" ONCLICK="window.location.href='/getnote'"> 
+	   </FORM>
+	
+	   
+	   {% if error %}
+	   
+	   <div id= "error">
+	   {{error}}
+	   </div>
+	   
+	   {% endif %}
+	    
+         
+		
+         
+
+  </body>
+</html>
