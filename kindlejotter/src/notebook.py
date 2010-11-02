@@ -101,22 +101,20 @@ class edit (webapp.RequestHandler):
         qs = self.request.query_string
         qstr = str(qs)
         
+        editnote = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr)
+        results = editnote.fetch(limit=1)
+        
         content = self.request.get('content')          
         subject = self.request.get('subject')
 
         if content == '' or subject == '' :
             doRender(
                      self, 'edit.html',
-                     {'error' : 'Please fill in all fields for note to be saved'})
+                     {'results' : results, 'error' : 'Please fill in all fields for note to be saved.'})
             return
         
-#        que = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr)
-#                         
-#        results = que.fetch(limit=1)
-#        results.content = content
-#        results.subject = subject
         editnote = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr).get()
-        #editnote = Note.all().ancestor(qstr).get()
+        
         editnote.content = content
         editnote.subject = subject                      
         editnote.put()
