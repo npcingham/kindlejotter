@@ -16,8 +16,7 @@
              		<th> Date </th>
              		<th> Subject </th>
              		<th> View </th>
-             		<th> Edit </th>
-             		
+             		<th> Delete </th>
              	</tr>
              	
              {% for note in notelist %}
@@ -26,7 +25,8 @@
              	<td>{{note.subject}}</td>
              	<td>	<INPUT TYPE="BUTTON" VALUE="View" ONCLICK="window.location.href='/show?{{note.key}}'">
              	</td>
-             	
+             	<td>	<INPUT TYPE="BUTTON" VALUE="Delete" ONCLICK="window.location.href='/delete?{{note.key}}'">
+             	</td>
        		{% endfor %}
            	</table>
            		

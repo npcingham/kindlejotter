@@ -84,6 +84,19 @@ class show (webapp.RequestHandler):
             doRender(self, 'shownote.html',
                  {'results': results,'qs': qstr,})   
 
+class delete (webapp.RequestHandler):
+    def get(self):
+            qs = self.request.query_string
+            qstr = str(qs)
+   
+            que = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr)
+                                      
+            results = que.fetch(limit=1)
+            for result in results:
+                result.delete()
+            
+            self.redirect('/getnote') 
+
 class edit (webapp.RequestHandler):
     def get(self):
             
@@ -119,7 +132,7 @@ class edit (webapp.RequestHandler):
         editnote.subject = subject                      
         editnote.put()
          
-        self.redirect('/')
+        self.redirect('/getnote')
                     
 application = webapp.WSGIApplication(
                                      [
@@ -128,6 +141,7 @@ application = webapp.WSGIApplication(
                                         ('/filter', filternotes),
                                         ('/show', show),
                                         ('/edit', edit),
+                                        ('/delete', delete),
                                     ],
                                      debug=True)
 wsgiref.handlers.CGIHandler().run(application)
