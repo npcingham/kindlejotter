@@ -29,6 +29,11 @@ class Note (db.Model):
     subject=db.StringProperty(multiline=True)
 #Display Form
 
+class welcome(webapp.RequestHandler):
+    def get(self):
+        doRender(self, 'welcome.html')
+
+
 class MainPage(webapp.RequestHandler):
     def get(self):
         doRender(self, 'page.html')
@@ -136,7 +141,8 @@ class edit (webapp.RequestHandler):
                     
 application = webapp.WSGIApplication(
                                      [
-                                        ('/', MainPage),
+                                        ('/', welcome),
+                                        ('/entry', MainPage),
                                         ('/getnote', notebook),
                                         ('/filter', filternotes),
                                         ('/show', show),
