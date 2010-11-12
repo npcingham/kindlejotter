@@ -6,7 +6,7 @@
 
   <body>
 
-               <h1>Kindle Jotter - New</h1>
+               <h1>Kindle Jotter - New <fb:login-button></fb:login-button> </h1> 
               
               <form name= "entrybox" action="/" method="post">
            		<div id= "entry">
@@ -33,7 +33,20 @@ Your Note...</textarea></div>
 	   
 	   {% endif %}
 	    
-         
+   
+   
+   <div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+  FB.init({appId: '146091585438148', status: true, cookie: true, xfbml: true});
+  FB.Event.subscribe('auth.sessionChange', function(response) {
+    if (response.session) {
+      // A user has logged in, and a new cookie has been saved
+    } else {
+      // The user has logged out, and the cookie has been cleared
+    }
+  });
+</script>      
 		
          
 

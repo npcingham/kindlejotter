@@ -5,7 +5,9 @@ body {
   background-color: white;
 }
 
-
+textarea {
+	font-size: 15px;
+}
 
 #error {
 	font-family: Helvetica;

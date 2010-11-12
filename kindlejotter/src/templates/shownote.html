@@ -38,8 +38,10 @@
                	</tr>
              	
              {% for note in results %}
+             
              <tr>
-             	<td>{{note.content}}</td>	
+             	<td><textarea name=chosen_note cols=60 rows=10 readonly>{{note.content}}
+             </textarea></td>	
            	 </tr>
            	 </table>	
          	{% endfor%}
