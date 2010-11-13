@@ -8,7 +8,7 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 
 
-def doRender(handler,tname='page.html', values={}):
+def doRender(handler,tname='welcome.html', values={}):
     temp = os.path.join(
         os.path.dirname(__file__),
         'templates/' + tname)
@@ -55,7 +55,7 @@ class MainPage(webapp.RequestHandler):
                        
         newnote.put()
          
-        self.redirect('/')
+        self.redirect('/entry')
 
 #Display Form
 class notebook(webapp.RequestHandler):
