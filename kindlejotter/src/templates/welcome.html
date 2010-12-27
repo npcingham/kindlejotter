@@ -6,24 +6,19 @@
 
   <body>
 
-               <h1>Kindle Jotter <a href="/entry" > <img src="/stylesheets/logo.png" height="50" width="48" alt="Kindle Jotter" /></a></h1> 
+               <h1>Kindle Jotter 
+               {% if user %}
+               <a href="/" > <img src="/stylesheets/logo.png" height="50" width="48" alt="Kindle Jotter" /></a></h1> 
+               {% endif %}
                
-               <p> <fb:login-button></fb:login-button> </p>
+       <div id= "loginout">
+	   {{greeting}}
+	   </div>
               
      
      
      <div id="fb-root"></div>
-<script src="http://connect.facebook.net/en_US/all.js"></script>
-<script>
-  FB.init({appId: '146091585438148', status: true, cookie: true, xfbml: true});
-  FB.Event.subscribe('auth.sessionChange', function(response) {
-    if (response.session) {
-      // A user has logged in, and a new cookie has been saved
-    } else {
-      // The user has logged out, and the cookie has been cleared
-    }
-  });
-</script> 
+
      
      
               
