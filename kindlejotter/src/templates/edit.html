@@ -6,7 +6,10 @@
 
   <body>
 
-               <h1>Kindle Jotter - Edit</h1>
+               {%extends  "_base.html" %}
+     
+     	{% block bodycontent %}
+     	
               {% for note in results %}
               <form  method="post">
            		<div id= "entry"><textarea name="subject" rows="1" cols="40">{{note.subject}}</textarea></div>
@@ -31,7 +34,7 @@
 	   {% endif %}
 	    
          
-		
+	{% endblock %}	
          
 
   </body>

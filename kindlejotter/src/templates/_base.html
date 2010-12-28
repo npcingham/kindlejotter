@@ -1,0 +1,28 @@
+<html>
+
+ <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" >
+      </head>
+
+
+  <body>
+	<h1>
+		<span class="title">
+		Kindle Jotter
+		</span>
+		<span class="signinout"> 
+      	 {{greeting}} 
+       	</span>
+    </h1>
+       
+       <div id = "bodycontent">
+       
+       {% block bodycontent %}       
+     	This is replaced
+     	{% endblock %}
+      
+      </div>
+
+              
+  </body>
+</html>

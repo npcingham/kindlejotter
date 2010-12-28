@@ -5,6 +5,18 @@ body {
   background-color: white;
 }
 
+.title {
+	font-family: Helvetica;
+	font-size: 50;
+	color: blue;
+}
+
+.signinout {
+	font-family: Helvetica;
+	font-size: 10;
+	color: black;
+}
+
 textarea {
 	font-size: 30px;
 }

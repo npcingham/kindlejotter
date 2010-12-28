@@ -28,6 +28,8 @@ class Note (db.Model):
     content=db.StringProperty(multiline=True)
     date = db.DateTimeProperty(auto_now_add=True)
     subject=db.StringProperty(multiline=True)
+    user = db.UserProperty()
+    userid = db.StringProperty()
 #Display Form
 
 class welcome(webapp.RequestHandler):
@@ -36,7 +38,7 @@ class welcome(webapp.RequestHandler):
         user = users.get_current_user()
         if user:
             
-            greeting = ("Welcome, %s! (<a href=\"%s\">sign out</a>)" %
+            greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
                         (user.nickname(), users.create_logout_url("/")))
             
             doRender(self, 'page.html', {'greeting' : greeting,})
@@ -46,17 +48,24 @@ class welcome(webapp.RequestHandler):
                         users.create_login_url("/"))
 
         #self.response.out.write("<html><body>%s</body></html>" % greeting)
-        
+            
+            
             doRender(self, 'welcome.html', {'greeting' : greeting,})
 
 
 class MainPage(webapp.RequestHandler):
     def get(self):
         
-        doRender(self, 'page.html')
+        user = users.get_current_user()      
+        greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
+                        (user.nickname(), users.create_logout_url("/")))
+        
+        doRender(self, 'page.html',{'greeting':greeting, })
         
     def post(self):
         #note = Note()
+        user = users.get_current_user()
+        userid = user.user_id()
         
         content = self.request.get('content')
              
@@ -68,7 +77,7 @@ class MainPage(webapp.RequestHandler):
                      {'error' : 'Please fill in all fields for note to be saved'})
             return
         
-        newnote = Note(content=content, subject=subject);
+        newnote = Note(content=content, subject=subject, user=user, userid = userid);
                        
         newnote.put()
          
@@ -77,19 +86,33 @@ class MainPage(webapp.RequestHandler):
 #Display Form
 class notebook(webapp.RequestHandler):
     def get(self):
+        
+        user = users.get_current_user()
+        userid = user.user_id()
                             
-        notest = db.Query(Note)
+        #notest = db.Query(Note)
+        notest = db.GqlQuery ("SELECT * FROM Note WHERE userid = :1", userid)
         notelist = notest.fetch(limit=100)
+        
+        greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
+                        (user.nickname(), users.create_logout_url("/")))
+        
         doRender(self, 'readnote.html',
-                 {'notelist': notelist, })
+                 {'notelist': notelist,'greeting':greeting, })
         
 class filternotes(webapp.RequestHandler):
     def get(self):
-                            
-        notest = db.Query(Note)
+        user = users.get_current_user()
+        userid = user.user_id()                    
+        notest = db.GqlQuery ("SELECT * FROM Note WHERE userid = :1", userid)
         notelist = notest.fetch(limit=5)
+        
+        user = users.get_current_user()      
+        greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
+                        (user.nickname(), users.create_logout_url("/")))
+        
         doRender(self, 'readnote.html',
-                 {'notelist': notelist, })
+                 {'notelist': notelist,'greeting':greeting, })
         
 
         
@@ -102,9 +125,13 @@ class show (webapp.RequestHandler):
             que = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr)
                                       
             results = que.fetch(limit=10)
-
+            
+            user = users.get_current_user()      
+            greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
+                        (user.nickname(), users.create_logout_url("/")))
+            
             doRender(self, 'shownote.html',
-                 {'results': results,'qs': qstr,})   
+                 {'results': results,'qs': qstr,'greeting':greeting,})   
 
 class delete (webapp.RequestHandler):
     def get(self):
@@ -128,9 +155,13 @@ class edit (webapp.RequestHandler):
             que = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr)
                          
             results = que.fetch(limit=1)
-
+            
+            user = users.get_current_user()      
+            greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
+                        (user.nickname(), users.create_logout_url("/")))
+            
             doRender(self, 'edit.html',
-                 {'results': results,}) 
+                 {'results': results,'greeting':greeting,}) 
     def post(self):
         
         qs = self.request.query_string
