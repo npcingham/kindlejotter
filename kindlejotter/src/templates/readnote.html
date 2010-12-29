@@ -20,7 +20,7 @@
              		<th> View </th>
              		<th> Delete </th>
              	</tr>
-             	
+             Your Notes	
              {% for note in notelist %}
              <tr>
              	<td>{{note.date|date:"D d M Y"}}</td>
@@ -31,6 +31,29 @@
              	</td>
        		{% endfor %}
            	</table>
+           	
+           	</p>
+             <table>
+             	<tr>
+             		<th> Date </th>
+             		<th> Friend </th>
+             		<th> Subject </th>
+             		<th> View </th>
+             		
+             	</tr>
+             Friend's Notes	
+             {% for note in sharedlist %}
+             <tr>
+             	<td>{{note.date|date:"D d M Y"}}</td>
+             	<td>{{note.user}}</td>
+             	<td>{{note.subject}}</td>
+             	<td>	<INPUT TYPE="BUTTON" VALUE="View" ONCLICK="window.location.href='/show?{{note.key}}'">
+             	</td>
+             	
+       		{% endfor %}
+           	</table>
+           	
+           	
            		
            	{% endblock %}	
          

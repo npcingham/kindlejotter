@@ -30,6 +30,7 @@ class Note (db.Model):
     subject=db.StringProperty(multiline=True)
     user = db.UserProperty()
     userid = db.StringProperty()
+    sharewith = db.StringProperty()
 #Display Form
 
 class welcome(webapp.RequestHandler):
@@ -71,13 +72,20 @@ class MainPage(webapp.RequestHandler):
              
         subject = self.request.get('subject')
         
+        #sharewith = self.request.get ('sharewith')
+        
+        if "@" in content:
+            firstsplit = content.partition("@")[2]
+            secondsplit = firstsplit.split(" ")[0]
+            sharewith = secondsplit
+        
         if content == '' or subject == '' :
             doRender(
                      self, 'page.html',
                      {'error' : 'Please fill in all fields for note to be saved'})
             return
         
-        newnote = Note(content=content, subject=subject, user=user, userid = userid);
+        newnote = Note(content=content, subject=subject, user=user,  userid = userid, sharewith = sharewith,);
                        
         newnote.put()
          
@@ -89,16 +97,21 @@ class notebook(webapp.RequestHandler):
         
         user = users.get_current_user()
         userid = user.user_id()
+        nick_name = user.nickname()
                             
         #notest = db.Query(Note)
-        notest = db.GqlQuery ("SELECT * FROM Note WHERE userid = :1", userid)
+        notest = db.GqlQuery ("SELECT * FROM Note WHERE userid = :1 ", userid)
+        sharedquery = db.GqlQuery ("SELECT * FROM Note WHERE sharewith = :1", nick_name)
+        
+        
         notelist = notest.fetch(limit=100)
+        sharedlist = sharedquery.fetch(limit=100)
         
         greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
                         (user.nickname(), users.create_logout_url("/")))
         
         doRender(self, 'readnote.html',
-                 {'notelist': notelist,'greeting':greeting, })
+                 {'notelist': notelist,'sharedlist' : sharedlist, 'greeting':greeting, })
         
 class filternotes(webapp.RequestHandler):
     def get(self):
@@ -124,15 +137,21 @@ class show (webapp.RequestHandler):
    
             que = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr)
                                       
-            results = que.fetch(limit=10)
+            results = que.fetch(limit=1)
             
+                
             user = users.get_current_user()      
             greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
                         (user.nickname(), users.create_logout_url("/")))
-            
-            doRender(self, 'shownote.html',
-                 {'results': results,'qs': qstr,'greeting':greeting,})   
-
+            for note in results:
+                if note.user == user:
+                    deleteflag =1
+                    doRender(self, 'shownote.html',
+                    {'results': results,'qs': qstr,'greeting':greeting,'deleteflag':deleteflag})   
+                else:
+                    doRender(self, 'shownote.html',
+                    {'results': results,'qs': qstr,'greeting':greeting})
+                    
 class delete (webapp.RequestHandler):
     def get(self):
             qs = self.request.query_string

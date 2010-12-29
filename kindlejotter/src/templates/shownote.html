@@ -28,10 +28,16 @@
              	<td>{{note.date|date:"D d M Y"}}</td>
              	<td>{{note.subject}}</td>
              	<td><INPUT TYPE="BUTTON" VALUE="Edit" ONCLICK="window.location.href='/edit?{{note.key}}'"></td>
+             
+             {% if deleteflag %}
                 <td><INPUT TYPE="BUTTON" VALUE="Delete" ONCLICK="window.location.href='/delete?{{note.key}}'"></td>
+             {% endif %}
+             {% if not deleteflag %}
+				<td> Shared </td>
+             {% endif %}
              </tr>
-             	
-       		{% endfor %}
+             {% endfor %}	
+       		
            	</table>
            	
            	<table>
