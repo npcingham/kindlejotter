@@ -78,7 +78,9 @@ class MainPage(webapp.RequestHandler):
             firstsplit = content.partition("@")[2]
             secondsplit = firstsplit.split(" ")[0]
             sharewith = secondsplit
-        
+        else:
+            sharewith = 'nobody'
+            
         if content == '' or subject == '' :
             doRender(
                      self, 'page.html',

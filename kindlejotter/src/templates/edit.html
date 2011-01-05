@@ -12,9 +12,12 @@
      	
               {% for note in results %}
               <form  method="post">
-           		<div id= "entry"><textarea name="subject" rows="1" cols="40">{{note.subject}}</textarea></div>
-                <div id= "entry"><textarea name="content" rows="10" cols="60">{{note.content}}</textarea></div>
-                
+           		<div>
+           		<input class= 'centry' type='text' name="subject" title="Subject" rows="1" cols="40" value ='{{note.subject}}'>
+                </div>
+                <textarea class= 'centrycontent' name="content" title ="Write note..." 
+                rows="10" cols="80">{{note.content}}</textarea>
+                 
                 <div><input type="submit" value="Save"></div>
                 
                 

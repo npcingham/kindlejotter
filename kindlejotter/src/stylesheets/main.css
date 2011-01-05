@@ -8,7 +8,7 @@ body {
 .title {
 	font-family: Helvetica;
 	font-size: 50;
-	color: blue;
+	color: navy;
 }
 
 .signinout {
@@ -17,9 +17,7 @@ body {
 	color: black;
 }
 
-textarea {
-	font-size: 30px;
-}
+
 
 #error {
 	font-family: Helvetica;
@@ -27,10 +25,15 @@ textarea {
 	color: red;
 }
 
-#entry {
-	font-family: Helvetica;
-	size: 50;
-	color: red;
+.centry {
+	font-family: Palitino;
+	font-size: 25;
+	color: black;
+}
+.centrycontent {
+	font-family: Palitino;
+	font-size: 18;
+	color: black;
 }
 
 table {
