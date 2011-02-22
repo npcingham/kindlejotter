@@ -53,7 +53,11 @@ class welcome(webapp.RequestHandler):
             
             doRender(self, 'welcome.html', {'greeting' : greeting,})
 
-
+class dd(webapp.RequestHandler):
+    def get(self):
+        
+        doRender(self, 'google426a21f73c36306d.html',{})
+        
 class MainPage(webapp.RequestHandler):
     def get(self):
         
@@ -62,6 +66,7 @@ class MainPage(webapp.RequestHandler):
                         (user.nickname(), users.create_logout_url("/")))
         
         doRender(self, 'page.html',{'greeting':greeting, })
+
         
     def post(self):
         #note = Note()
@@ -81,11 +86,8 @@ class MainPage(webapp.RequestHandler):
         else:
             sharewith = 'nobody'
             
-        if content == '' or subject == '' :
-            doRender(
-                     self, 'page.html',
-                     {'error' : 'Please fill in all fields for note to be saved'})
-            return
+       
+            
         
         newnote = Note(content=content, subject=subject, user=user,  userid = userid, sharewith = sharewith,);
                        
@@ -102,8 +104,8 @@ class notebook(webapp.RequestHandler):
         nick_name = user.nickname()
                             
         #notest = db.Query(Note)
-        notest = db.GqlQuery ("SELECT * FROM Note WHERE userid = :1 ", userid)
-        sharedquery = db.GqlQuery ("SELECT * FROM Note WHERE sharewith = :1", nick_name)
+        notest = db.GqlQuery ("SELECT * FROM Note WHERE userid = :1  ORDER BY date DESC", userid)
+        sharedquery = db.GqlQuery ("SELECT * FROM Note WHERE sharewith = :1 ORDER BY date DESC", nick_name)
         
         
         notelist = notest.fetch(limit=100)
@@ -115,22 +117,7 @@ class notebook(webapp.RequestHandler):
         doRender(self, 'readnote.html',
                  {'notelist': notelist,'sharedlist' : sharedlist, 'greeting':greeting, })
         
-class filternotes(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        userid = user.user_id()                    
-        notest = db.GqlQuery ("SELECT * FROM Note WHERE userid = :1", userid)
-        notelist = notest.fetch(limit=5)
-        
-        user = users.get_current_user()      
-        greeting = ("Signed in as: %s (<a href=\"%s\">Sign out</a>)" %
-                        (user.nickname(), users.create_logout_url("/")))
-        
-        doRender(self, 'readnote.html',
-                 {'notelist': notelist,'greeting':greeting, })
-        
 
-        
 
 class show (webapp.RequestHandler):
     def get(self):
@@ -194,6 +181,13 @@ class edit (webapp.RequestHandler):
         content = self.request.get('content')          
         subject = self.request.get('subject')
 
+        if "@" in content:
+            firstsplit = content.partition("@")[2]
+            secondsplit = firstsplit.split(" ")[0]
+            sharewith = secondsplit
+        else:
+            sharewith = 'nobody'
+            
         if content == '' or subject == '' :
             doRender(
                      self, 'edit.html',
@@ -202,6 +196,7 @@ class edit (webapp.RequestHandler):
         
         editnote = db.GqlQuery("SELECT * FROM Note WHERE ANCESTOR IS :1", qstr).get()
         
+        editnote.sharewith = sharewith
         editnote.content = content
         editnote.subject = subject                      
         editnote.put()
@@ -213,10 +208,11 @@ application = webapp.WSGIApplication(
                                         ('/', welcome),
                                         ('/entry', MainPage),
                                         ('/getnote', notebook),
-                                        ('/filter', filternotes),
+                                      
                                         ('/show', show),
                                         ('/edit', edit),
                                         ('/delete', delete),
+                                        ('/google426a21f73c36306d.html',dd),
                                     ],
                                      debug=True)
 wsgiref.handlers.CGIHandler().run(application)

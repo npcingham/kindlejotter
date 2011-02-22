@@ -1,6 +1,7 @@
 <html>
 
  <head>
+ 	<title>Read Note</title>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
 
@@ -9,8 +10,8 @@
      
      	{% block bodycontent %}
              <p>
-             <INPUT TYPE="BUTTON" VALUE="Back to Notes" ONCLICK="window.location.href='/getnote'">
-             <INPUT TYPE="BUTTON" VALUE="New Note" ONCLICK="window.location.href='/entry'">
+             <INPUT TYPE="BUTTON" VALUE="Back to Notes" title = 'Alt + B' accesskey = 'b' ONCLICK="window.location.href='/getnote'">
+             <INPUT TYPE="BUTTON" VALUE="New Note" title = 'Alt + N' accesskey = 'n' ONCLICK="window.location.href='/entry'">
            		
 	   		</p>
 	   		 <table>
@@ -27,7 +28,7 @@
              <tr>
              	<td>{{note.date|date:"D d M Y"}}</td>
              	<td>{{note.subject}}</td>
-             	<td><INPUT TYPE="BUTTON" VALUE="Edit" ONCLICK="window.location.href='/edit?{{note.key}}'"></td>
+             	<td><INPUT TYPE="BUTTON" VALUE="Edit" title = 'Alt + C' accesskey = 'c' ONCLICK="window.location.href='/edit?{{note.key}}'"></td>
              
              {% if deleteflag %}
                 <td><INPUT TYPE="BUTTON" VALUE="Delete" ONCLICK="window.location.href='/delete?{{note.key}}'"></td>

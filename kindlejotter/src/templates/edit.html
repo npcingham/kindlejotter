@@ -1,6 +1,7 @@
 <html>
 
  <head>
+ 	<title>Edit Note</title>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" >
   </head>
 
@@ -18,13 +19,13 @@
                 <textarea class= 'centrycontent' name="content" title ="Write note..." 
                 rows="10" cols="80">{{note.content}}</textarea>
                  
-                <div><input type="submit" value="Save"></div>
+                <div><input type="submit" title = 'Alt + S' accesskey = 's' value="Save"></div>
                 
                 
               </form>
          	 	
                 <FORM>
-		<INPUT TYPE="BUTTON" VALUE="View Notes" ONCLICK="window.location.href='/getnote'"> 
+		<INPUT TYPE="BUTTON" VALUE="View Notes" title = 'Alt + V' accesskey = 'v' ONCLICK="window.location.href='/getnote'"> 
 	   </FORM>
 	 		  {% endfor %}
 	   

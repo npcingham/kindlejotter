@@ -1,6 +1,7 @@
 <html>
 
  <head>
+ 	<title>View Notes</title>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
 
@@ -10,8 +11,8 @@
      	{% block bodycontent %}
              <p>
              
-             <INPUT TYPE="BUTTON" VALUE="New Note" accesskey = 'n' ONCLICK="window.location.href='/entry'">
-           		<INPUT TYPE="BUTTON" VALUE="Oldest Five Notes" ONCLICK="window.location.href='/filter'"> 
+             <INPUT TYPE="BUTTON" VALUE="New Note" title='ALT + N' accesskey = 'n' ONCLICK="window.location.href='/entry'">
+           		
 	   		</p>
              <table>
              	<tr>
@@ -22,10 +23,11 @@
              	</tr>
              Your Notes	
              {% for note in notelist %}
+            
              <tr>
              	<td>{{note.date|date:"D d M Y"}}</td>
              	<td>{{note.subject}}</td>
-             	<td>	<INPUT TYPE="BUTTON" VALUE="View" ONCLICK="window.location.href='/show?{{note.key}}'">
+             	<td>	<INPUT TYPE="BUTTON" VALUE="View" tabindex = '1' title ='TAB to jump through notes' ONCLICK="window.location.href='/show?{{note.key}}'">
              	</td>
              	<td>	<INPUT TYPE="BUTTON" VALUE="Delete" ONCLICK="window.location.href='/delete?{{note.key}}'">
              	</td>
@@ -47,7 +49,7 @@
              	<td>{{note.date|date:"D d M Y"}}</td>
              	<td>{{note.user}}</td>
              	<td>{{note.subject}}</td>
-             	<td>	<INPUT TYPE="BUTTON" VALUE="View" ONCLICK="window.location.href='/show?{{note.key}}'">
+             	<td>	<INPUT TYPE="BUTTON" VALUE="View" tabindex = '1' title ='TAB to jump through notes' ONCLICK="window.location.href='/show?{{note.key}}'">
              	</td>
              	
        		{% endfor %}

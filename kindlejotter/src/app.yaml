@@ -7,6 +7,9 @@ handlers:
 - url: /stylesheets
   static_dir: stylesheets
 
+- url: /google426a21f73c36306d.html
+  script: notebook.py
+
 - url: /.*
   script: notebook.py
   login: required
